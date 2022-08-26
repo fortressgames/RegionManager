@@ -1,8 +1,8 @@
 package net.fortressgames.regionmanager.commands.subcommands;
 
 import net.fortressgames.fortressapi.players.FortressPlayer;
+import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.regions.Region;
-import org.bukkit.ChatColor;
 
 public abstract class RegionPriority {
 
@@ -11,7 +11,7 @@ public abstract class RegionPriority {
 		if(args.length >= 3) {
 			region.setPri(Integer.parseInt(args[2]));
 			region.save();
-			player.sendMessage(ChatColor.GREEN + "Pri set to " + args[2]);
+			player.sendMessage(RegionLang.regionPri(args[2]));
 		}
 	}
 }

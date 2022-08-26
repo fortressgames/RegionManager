@@ -1,0 +1,26 @@
+package net.fortressgames.regionmanager;
+
+import net.fortressgames.fortressapi.Lang;
+import org.bukkit.ChatColor;
+
+public class RegionLang {
+
+	public static final String UNKNOWN_REGION = Lang.RED + "Unknown region!";
+	public static final String REGION_NOT_FOUND = Lang.RED + "No region found!";
+	public static final String REGION_EXISTS = Lang.RED + "That is already a region!";
+	public static final String REGION_NOT_FOUND_RUN_POS = Lang.RED + "No region found run /rg pos";
+	public static final String REGION_ADDED = Lang.GREEN + "Region added!";
+	public static final String REGION_NAME_UPDATE = Lang.GREEN + "Name updated!";
+	public static final String REGION_FLAG_ADDED = Lang.GREEN + "Flag added!";
+	public static final String REGION_FLAG_REMOVED = Lang.GREEN + "Flag removed!";
+	public static final String REGION_POS_CLEAR = Lang.GREEN + "Pos's cleared!";
+	public static final String REGION_REMOVE = Lang.GREEN + "Region removed!";
+	public static final String REGION_SHOW = Lang.GREEN + "Showing region!";
+
+	public static String regionPos(String size) {
+		return Lang.GREEN + "Pos added! " + ChatColor.RED + "#" + size;
+	}
+	public static String  regionPri(String value) {
+		return Lang.GREEN + "Pri set to " + value;
+	}
+}

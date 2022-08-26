@@ -1,8 +1,8 @@
 package net.fortressgames.regionmanager.commands.subcommands;
 
 import net.fortressgames.fortressapi.players.FortressPlayer;
+import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.regions.Region;
-import org.bukkit.ChatColor;
 
 public abstract class RegionFlag {
 
@@ -31,7 +31,7 @@ public abstract class RegionFlag {
 				}
 
 				region.save();
-				player.sendMessage(ChatColor.GREEN + "Flag added!");
+				player.sendMessage(RegionLang.REGION_FLAG_ADDED);
 				return;
 			}
 
@@ -39,7 +39,7 @@ public abstract class RegionFlag {
 
 				region.removeFlag(args[3]);
 				region.save();
-				player.sendMessage(ChatColor.GREEN + "Flag removed!");
+				player.sendMessage(RegionLang.REGION_FLAG_REMOVED);
 			}
 		}
 	}

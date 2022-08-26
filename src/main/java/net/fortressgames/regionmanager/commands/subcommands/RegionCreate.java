@@ -3,11 +3,11 @@ package net.fortressgames.regionmanager.commands.subcommands;
 import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.fortressapi.utils.Vector2;
 import net.fortressgames.fortressapi.utils.Vector3;
+import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.regions.RegionModule;
 import net.fortressgames.regionmanager.users.UserModule;
 import net.fortressgames.regionmanager.utils.RegionMaths;
-import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,12 @@ public abstract class RegionCreate {
 		if(args.length == 2) {
 
 			if(RegionModule.getInstance().isRegion(args[1])) {
-				player.sendMessage(ChatColor.RED + "That is already a region!");
+				player.sendMessage(RegionLang.REGION_EXISTS);
 				return;
 			}
 
 			if(UserModule.getInstance().getUser(player.getPlayer()).getPoints().size() == 0) {
-				player.sendMessage(ChatColor.RED + "No region found run /rg pos");
+				player.sendMessage(RegionLang.REGION_NOT_FOUND_RUN_POS);
 				return;
 			}
 
@@ -48,7 +48,7 @@ public abstract class RegionCreate {
 
 			UserModule.getInstance().getUser(player.getPlayer()).getPoints().clear();
 
-			player.sendMessage(ChatColor.GREEN + "Region added!");
+			player.sendMessage(RegionLang.REGION_ADDED);
 		}
 	}
 }

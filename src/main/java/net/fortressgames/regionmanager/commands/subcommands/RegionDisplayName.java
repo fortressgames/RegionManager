@@ -1,8 +1,8 @@
 package net.fortressgames.regionmanager.commands.subcommands;
 
 import net.fortressgames.fortressapi.players.FortressPlayer;
+import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.regions.Region;
-import org.bukkit.ChatColor;
 
 public abstract class RegionDisplayName {
 
@@ -12,7 +12,7 @@ public abstract class RegionDisplayName {
 			region.setDisplayName(args[2].replace("_", " "));
 			region.save();
 
-			player.sendMessage(ChatColor.GREEN + "Name updated!");
+			player.sendMessage(RegionLang.REGION_NAME_UPDATE);
 		}
 	}
 }

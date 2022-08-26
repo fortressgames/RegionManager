@@ -55,7 +55,5 @@ public class RegionManager extends JavaPlugin {
 }
 
 //TODO
-// add lang.class
-// add more permissions
 // PVP?
 // COMBAT LOG

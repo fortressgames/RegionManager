@@ -4,6 +4,7 @@ import net.fortressgames.fortressapi.Lang;
 import net.fortressgames.fortressapi.commands.CommandBase;
 import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.PermissionLang;
+import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.commands.subcommands.*;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.regions.RegionModule;
@@ -27,7 +28,7 @@ public class RegionCommand extends CommandBase {
 		if(sender instanceof Player target) {
 			player = FortressPlayer.getPlayer(target);
 		} else {
-			sender.sendMessage(ChatColor.RED + "Only players can do this command!");
+			sender.sendMessage(Lang.PLAYERS_ONLY);
 			return;
 		}
 
@@ -40,7 +41,7 @@ public class RegionCommand extends CommandBase {
 			if(RegionModule.getInstance().isRegion(args[1])) {
 				region = RegionModule.getInstance().getRegion(args[1]);
 			} else {
-				sender.sendMessage(ChatColor.RED + "Unknown region!");
+				sender.sendMessage(RegionLang.UNKNOWN_REGION);
 				return;
 			}
 		}
@@ -106,7 +107,7 @@ public class RegionCommand extends CommandBase {
 		if(args[0].equalsIgnoreCase("info")) {
 
 			if(UserModule.getInstance().getUser(player.getPlayer()).getRegions().isEmpty()) {
-				sender.sendMessage(ChatColor.RED + "No region found!");
+				sender.sendMessage(RegionLang.REGION_NOT_FOUND);
 				return;
 			}
 
