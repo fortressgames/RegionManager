@@ -1,0 +1,7 @@
+name: RegionManager
+author: FortressGames
+version: 1.0
+api-version: 1.17
+main: net.fortressgames.regionmanager.RegionManager
+depend:
+  - FortressAPI
