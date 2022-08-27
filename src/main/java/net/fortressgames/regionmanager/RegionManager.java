@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.fortressgames.fortressapi.commands.CommandModule;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.regionmanager.commands.RegionCommand;
+import net.fortressgames.regionmanager.listeners.pvplistener;
 import net.fortressgames.regionmanager.regions.RegionModule;
 import net.fortressgames.regionmanager.users.UserModule;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,8 +40,9 @@ public class RegionManager extends JavaPlugin {
 
 		// Register events
 		this.getServer().getPluginManager().registerEvents(UserModule.getInstance(), this);
+		this.getServer().getPluginManager().registerEvents(new pvplistener(), this);
 
-		new MoveTask().runTaskTimer(this, TimeUnit.SECONDS, 2);
+		new MoveTask().runTaskTimer(this, TimeUnit.SECONDS, 1);
 
 		getLogger().info(ConsoleMessage.GREEN + "Version: " + getDescription().getVersion() + " Enabled!" + ConsoleMessage.RESET);
 	}
@@ -55,5 +57,4 @@ public class RegionManager extends JavaPlugin {
 }
 
 //TODO
-// PVP?
 // COMBAT LOG

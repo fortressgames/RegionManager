@@ -16,6 +16,7 @@ public class RegionLang {
 	public static final String REGION_POS_CLEAR = Lang.GREEN + "Pos's cleared!";
 	public static final String REGION_REMOVE = Lang.GREEN + "Region removed!";
 	public static final String REGION_SHOW = Lang.GREEN + "Showing region!";
+	public static final String PVP_FALSE =Lang.RED + "PVP is disabled here!";
 
 	public static String regionPos(String size) {
 		return Lang.GREEN + "Pos added! " + ChatColor.RED + "#" + size;
