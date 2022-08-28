@@ -58,3 +58,4 @@ public class RegionManager extends JavaPlugin {
 
 //TODO
 // COMBAT LOG
+// if effect is changed when in region it does not change for player

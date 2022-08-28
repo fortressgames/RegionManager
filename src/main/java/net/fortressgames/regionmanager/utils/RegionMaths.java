@@ -77,13 +77,15 @@ public class RegionMaths {
 		int targetY = position.getBlockY(); // Height
 		int targetZ = position.getBlockZ(); // Depth
 
-		if (targetY < minY || targetY > maxY) {
+		if(targetY < minY || targetY > maxY) {
 			return false;
 		}
+
 		//Quick and dirty check.
-		if (targetX < min.getBlockX() || targetX > max.getBlockX() || targetZ < min.getBlockZ() || targetZ > max.getBlockZ()) {
+		if(targetX < min.getBlockX() || targetX > max.getBlockX() || targetZ < min.getBlockZ() || targetZ > max.getBlockZ()) {
 			return false;
 		}
+
 		boolean inside = false;
 		int npoints = points.size();
 		int xNew, zNew;
@@ -96,14 +98,14 @@ public class RegionMaths {
 		xOld = points.get(npoints - 1).getBlockX();
 		zOld = points.get(npoints - 1).getBlockZ();
 
-		for (i = 0; i < npoints; i++) {
+		for(i = 0; i < npoints; i++) {
 			xNew = points.get(i).getBlockX();
 			zNew = points.get(i).getBlockZ();
 			//Check for corner
-			if (xNew == targetX && zNew == targetZ) {
+			if(xNew == targetX && zNew == targetZ) {
 				return true;
 			}
-			if (xNew > xOld) {
+			if(xNew > xOld) {
 				x1 = xOld;
 				x2 = xNew;
 				z1 = zOld;
@@ -114,12 +116,12 @@ public class RegionMaths {
 				z1 = zNew;
 				z2 = zOld;
 			}
-			if (x1 <= targetX && targetX <= x2) {
+			if(x1 <= targetX && targetX <= x2) {
 				crossproduct = ((long) targetZ - (long) z1) * (long) (x2 - x1)
 						- ((long) z2 - (long) z1) * (long) (targetX - x1);
-				if (crossproduct == 0) {
-					if ((z1 <= targetZ) == (targetZ <= z2)) return true; // on edge
-				} else if (crossproduct < 0 && (x1 != targetX)) {
+				if(crossproduct == 0) {
+					if((z1 <= targetZ) == (targetZ <= z2)) return true; // on edge
+				} else if(crossproduct < 0 && (x1 != targetX)) {
 					inside = !inside;
 				}
 			}
@@ -136,15 +138,15 @@ public class RegionMaths {
 		int maxX = minX;
 		int maxZ = minZ;
 
-		for (Vector2 v : points) {
+		for(Vector2 v : points) {
 			int x = v.getBlockX();
 			int z = v.getBlockZ();
 
-			if (x < minX) minX = x;
-			if (z < minZ) minZ = z;
+			if(x < minX) minX = x;
+			if(z < minZ) minZ = z;
 
-			if (x > maxX) maxX = x;
-			if (z > maxZ) maxZ = z;
+			if(x > maxX) maxX = x;
+			if(z > maxZ) maxZ = z;
 		}
 
 		min = new Vector2(minX, minZ);

@@ -14,16 +14,30 @@ public abstract class RegionFlag {
 
 				switch(args[3].toUpperCase()) {
 
-					case "PVP", "TITLE", "ACTION_BAR", "SOUND" -> {
+					case "PVP", "TITLE", "ACTION_BAR" -> {
 						try {
-							region.addFlag(args[3].toUpperCase(), args[3].toUpperCase() + "_" + args[4].toUpperCase());
+							region.addFlag(args[3].toUpperCase() + "_" + args[4].toUpperCase(),
+									args[3].toUpperCase());
+
 						} catch (ArrayIndexOutOfBoundsException ignored) {
 							return;
 						}
 					}
+					case "SOUND" -> {
+						try {
+							region.addFlag(args[3].toUpperCase() + "_" + args[4].toUpperCase(),
+									args[3].toUpperCase() + "_" + args[4].toUpperCase());
+
+						} catch (ArrayIndexOutOfBoundsException ignored) {
+							return;
+						}
+					}
+
 					case "EFFECT", "PARTICLE" -> {
 						try {
-							region.addFlag(args[3].toUpperCase(), args[3].toUpperCase() + "_" + args[4].toUpperCase() + "_" + args[5].toUpperCase());
+							region.addFlag(args[3].toUpperCase() + "_" + args[4].toUpperCase() + "_" + args[5].toUpperCase(),
+									args[3].toUpperCase() + "_" + args[4].toUpperCase());
+
 						} catch (ArrayIndexOutOfBoundsException ignored) {
 							return;
 						}
@@ -34,13 +48,13 @@ public abstract class RegionFlag {
 				player.sendMessage(RegionLang.REGION_FLAG_ADDED);
 				return;
 			}
+		}
 
-			if(args[2].equalsIgnoreCase("remove")) {
+		if(args.length >= 4 && args[2].equalsIgnoreCase("remove")) {
 
-				region.removeFlag(args[3]);
-				region.save();
-				player.sendMessage(RegionLang.REGION_FLAG_REMOVED);
-			}
+			region.removeFlag(args[3].toUpperCase());
+			region.save();
+			player.sendMessage(RegionLang.REGION_FLAG_REMOVED);
 		}
 	}
 }

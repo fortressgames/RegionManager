@@ -2,15 +2,17 @@ package net.fortressgames.regionmanager.regions;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.utils.RegionMaths;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-//todo get all blocks as list
-//todo particles
 public class Region {
 
 	@Getter private final String name;
@@ -21,6 +23,9 @@ public class Region {
 	@Getter private final World world;
 
 	@Getter private final List<String> flags;
+	@Getter private final HashMap<String, DisplayParticleTask> particleTasks = new HashMap<>();
+
+	@Getter private final List<Vector3> allPoints;
 
 	public Region(String name, int pri, RegionMaths regionMaths, World world, List<String> flags, String displayName) {
 		this.world = world;
@@ -30,6 +35,14 @@ public class Region {
 		this.pri = pri;
 		this.regionMaths = regionMaths;
 		this.flags = flags;
+
+		this.allPoints = regionMaths.getAllPoints();
+
+		flags.forEach(flag -> {
+			if(flag.contains("PARTICLE")) {
+				particleStart(flag, flag.split("_")[0] + "_" + flag.split("_")[1]);
+			}
+		});
 	}
 
 	public void save() {
@@ -53,18 +66,38 @@ public class Region {
 		RegionManager.getInstance().saveConfig();
 	}
 
+	private void particleStart(String flag, String old) {
+
+		DisplayParticleTask task = new DisplayParticleTask(
+				Particle.valueOf(flag.split("_")[1]),
+				Integer.parseInt(flag.split("_")[2]),
+				this);
+		task.runTaskTimer(RegionManager.getInstance(), TimeUnit.SECONDS, 1);
+
+		particleTasks.put(old, task);
+	}
+
 	/**
 	 * Example PVP, EFFECT_JUMP, TITLE
 	 */
-	public void addFlag(String flag, String fullFlag) {
-		removeFlag(flag);
-		flags.add(fullFlag);
+	public void addFlag(String flag, String old) {
+		removeFlag(old);
+		flags.add(flag);
+
+		if(flag.contains("PARTICLE")) {
+			particleStart(flag, old);
+		}
 	}
 
 	/**
 	 * Example PVP, EFFECT_JUMP, TITLE
 	 */
 	public void removeFlag(String flag) {
+		if(particleTasks.containsKey(flag)) {
+			particleTasks.get(flag).cancel();
+			particleTasks.remove(flag);
+		}
+
 		int number = 0;
 
 		for(String f : flags) {
