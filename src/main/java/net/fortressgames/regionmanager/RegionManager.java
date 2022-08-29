@@ -6,6 +6,7 @@ import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.regionmanager.commands.RegionCommand;
 import net.fortressgames.regionmanager.listeners.pvplistener;
 import net.fortressgames.regionmanager.regions.RegionModule;
+import net.fortressgames.regionmanager.tasks.MoveTask;
 import net.fortressgames.regionmanager.users.UserModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class RegionManager extends JavaPlugin {
 
 	@Getter private static RegionManager instance;
+	@Getter private boolean combatLog;
+	@Getter private final int combatLogTimer = 30;
 
 	/**
 	 * Called when plugin first loads by spigot and is called before onEnable
@@ -32,6 +35,13 @@ public class RegionManager extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
+
+		if(!getConfig().contains("COMBAT_LOGGING")) {
+			getConfig().set("COMBAT_LOGGING", false);
+			saveConfig();
+		} else {
+			combatLog = getConfig().getBoolean("COMBAT_LOGGING");
+		}
 
 		// Register commands
 		CommandModule.registerCommand(new RegionCommand());
@@ -55,7 +65,3 @@ public class RegionManager extends JavaPlugin {
 		getLogger().info(ConsoleMessage.RED + "Version: " + getDescription().getVersion() + " Disabled!" + ConsoleMessage.RESET);
 	}
 }
-
-//TODO
-// COMBAT LOG
-// if effect is changed when in region it does not change for player

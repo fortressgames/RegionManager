@@ -16,12 +16,17 @@ public class RegionLang {
 	public static final String REGION_POS_CLEAR = Lang.GREEN + "Pos's cleared!";
 	public static final String REGION_REMOVE = Lang.GREEN + "Region removed!";
 	public static final String REGION_SHOW = Lang.GREEN + "Showing region!";
-	public static final String PVP_FALSE =Lang.RED + "PVP is disabled here!";
+	public static final String PVP_FALSE = Lang.RED + "PVP is disabled here!";
+	public static final String COMBAT_TAG_ON = Lang.YELLOW + "You are in combat don't logout!!";
+	public static final String COMBAT_TAG_OFF = Lang.YELLOW + "You are no longer in combat you are safe!";
 
+	public static String combatLogged(String player) {
+		return Lang.RED + player + " combat logged and died!";
+	}
 	public static String regionPos(String size) {
 		return Lang.GREEN + "Pos added! " + ChatColor.RED + "#" + size;
 	}
-	public static String  regionPri(String value) {
+	public static String regionPri(String value) {
 		return Lang.GREEN + "Pri set to " + value;
 	}
 }

@@ -1,5 +1,8 @@
 package net.fortressgames.regionmanager.users;
 
+import net.fortressgames.fortressapi.players.FortressPlayerModule;
+import net.fortressgames.regionmanager.RegionLang;
+import net.fortressgames.regionmanager.RegionManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,6 +45,17 @@ public class UserModule implements Listener {
 
 	@EventHandler
 	public void playerQuit(PlayerQuitEvent e) {
-		this.users.remove(e.getPlayer());
+		Player player = e.getPlayer();
+
+		if(RegionManager.getInstance().isCombatLog()) {
+			if(getUser(player).getCombatTask() != null) {
+				//combat logged!
+				player.setHealth(0);
+
+				FortressPlayerModule.getInstance().getOnlinePlayers().forEach(target -> target.sendMessage(RegionLang.combatLogged(target.getDisplayName())));
+			}
+		}
+
+		this.users.remove(player);
 	}
 }

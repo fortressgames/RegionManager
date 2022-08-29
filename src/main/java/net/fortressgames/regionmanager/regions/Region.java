@@ -2,12 +2,15 @@ package net.fortressgames.regionmanager.regions;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.utils.RegionMaths;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -87,6 +90,15 @@ public class Region {
 		if(flag.contains("PARTICLE")) {
 			particleStart(flag, old);
 		}
+
+		if(flag.contains("EFFECT")) {
+			FortressPlayerModule.getInstance().getOnlinePlayers().forEach(player -> {
+				if(regionMaths.inside(new Vector3(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()))) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(flag.split("_")[1]),
+							Integer.MAX_VALUE, Integer.parseInt(flag.split("_")[2])));
+				}
+			});
+		}
 	}
 
 	/**
@@ -96,6 +108,14 @@ public class Region {
 		if(particleTasks.containsKey(flag)) {
 			particleTasks.get(flag).cancel();
 			particleTasks.remove(flag);
+		}
+
+		if(flag.contains("EFFECT")) {
+			FortressPlayerModule.getInstance().getOnlinePlayers().forEach(player -> {
+				if(regionMaths.inside(new Vector3(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()))) {
+					player.removePotionEffect(PotionEffectType.getByName(flag.split("_")[1]));
+				}
+			});
 		}
 
 		int number = 0;

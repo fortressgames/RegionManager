@@ -1,9 +1,10 @@
-package net.fortressgames.regionmanager;
+package net.fortressgames.regionmanager.tasks;
 
 import net.fortressgames.fortressapi.FortressRunnable;
 import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.fortressapi.utils.Vector3;
+import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.events.EnterRegionEvent;
 import net.fortressgames.regionmanager.events.LeaveRegionEvent;
 import net.fortressgames.regionmanager.regions.Region;

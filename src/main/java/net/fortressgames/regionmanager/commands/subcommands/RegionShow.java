@@ -44,7 +44,8 @@ public abstract class RegionShow {
 						for(; covered < number; point1.add(vector)) {
 
 							Location location = point1.toLocation(player.getWorld());
-							player.getWorld().spawnParticle(Particle.END_ROD, location.getX() + 0.5, finalY, location.getZ() + 0.5, 1, 0, 0, 0, 0, null, true);
+
+							player.spawnParticle(Particle.END_ROD, location.getX() + 0.5, finalY, location.getZ() + 0.5, 1, 0, 0, 0, 0);
 
 							covered += 1;
 						}
