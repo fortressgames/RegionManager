@@ -73,9 +73,6 @@ public class RegionMaths {
 
 	public boolean inside(Vector3 position) {
 
-		// fail safe for error
-		if(min == null || max == null) setMinMaxPoints(points);
-
 		int targetX = position.getBlockX(); // Width
 		int targetY = position.getBlockY(); // Height
 		int targetZ = position.getBlockZ(); // Depth

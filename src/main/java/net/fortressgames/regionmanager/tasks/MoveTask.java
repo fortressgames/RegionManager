@@ -43,6 +43,8 @@ public class MoveTask extends FortressRunnable {
 
 		for(Region region : RegionModule.getInstance().getAll()) {
 
+			if(region.getName().equals("global")) continue;
+
 			if(region.getRegionMaths().inside(new Vector3(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()))) {
 
 				if(player.getWorld().equals(region.getWorld())) {
