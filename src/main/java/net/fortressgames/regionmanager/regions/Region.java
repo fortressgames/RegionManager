@@ -3,15 +3,17 @@ package net.fortressgames.regionmanager.regions;
 import lombok.Getter;
 import lombok.Setter;
 import net.fortressgames.fortressapi.players.FortressPlayerModule;
+import net.fortressgames.fortressapi.utils.Config;
 import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.utils.RegionMaths;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -49,24 +51,25 @@ public class Region {
 	}
 
 	public void save() {
-		Configuration config = RegionManager.getInstance().getConfig();
+		Config config = new Config(new File(RegionManager.getInstance().getDataFolder() + "/Regions/" + name + ".yml"));
 
-		config.set("Region." + name + ".Pri", this.pri);
-		config.set("Region." + name + ".NumberOfPoints", regionMaths.getPoints().size());
-		config.set("Region." + name + ".World", world.getName());
+		config.getConfig().set("Pri", this.pri);
+		config.getConfig().set("NumberOfPoints", regionMaths.getPoints().size());
+		config.getConfig().set("World", world.getName());
 
+		List<String> points = new ArrayList<>();
 		for(int i = 0; i < regionMaths.getPoints().size(); i++) {
-
-			config.set("Region." + name + ".Pos" + i, regionMaths.getPoints().get(i).toString());
+			points.add(regionMaths.getPoints().get(i).toString());
 		}
+		config.getConfig().set("Pos", points);
 
-		config.set("Region." + name + ".MaxY", regionMaths.getMaxY());
-		config.set("Region." + name + ".MinY", regionMaths.getMinY());
+		config.getConfig().set("MaxY", regionMaths.getMaxY());
+		config.getConfig().set("MinY", regionMaths.getMinY());
 
-		config.set("Region." + name + ".Flags", flags);
-		config.set("Region." + name + ".DisplayName", this.displayName);
+		config.getConfig().set("Flags", flags);
+		config.getConfig().set("DisplayName", this.displayName);
 
-		RegionManager.getInstance().saveConfig();
+		config.save();
 	}
 
 	private void particleStart(String flag, String old) {

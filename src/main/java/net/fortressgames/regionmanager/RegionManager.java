@@ -10,13 +10,14 @@ import net.fortressgames.regionmanager.tasks.MoveTask;
 import net.fortressgames.regionmanager.users.UserModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 public class RegionManager extends JavaPlugin {
 
 	@Getter private static RegionManager instance;
 	@Getter private boolean combatLog;
-	@Getter private final int combatLogTimer = 30;
+	@Getter private int combatLogTimer;
 
 	/**
 	 * Called when plugin first loads by spigot and is called before onEnable
@@ -26,6 +27,11 @@ public class RegionManager extends JavaPlugin {
 		// Create Default folder
 		if(!getDataFolder().exists()) {
 			getDataFolder().mkdir();
+		}
+
+		File regions = new File(getDataFolder() + "/Regions");
+		if(!regions.exists()) {
+			regions.mkdir();
 		}
 	}
 
@@ -41,6 +47,13 @@ public class RegionManager extends JavaPlugin {
 			saveConfig();
 		} else {
 			combatLog = getConfig().getBoolean("COMBAT_LOGGING");
+		}
+
+		if(!getConfig().contains("COMBAT_LOGGING_DELAY")) {
+			getConfig().set("COMBAT_LOGGING_DELAY", 30);
+			saveConfig();
+		} else {
+			combatLogTimer = getConfig().getInt("COMBAT_LOGGING_DELAY");
 		}
 
 		// Register commands

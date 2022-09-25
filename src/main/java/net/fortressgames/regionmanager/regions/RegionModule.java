@@ -1,15 +1,15 @@
 package net.fortressgames.regionmanager.regions;
 
 import lombok.Getter;
+import net.fortressgames.fortressapi.utils.Config;
 import net.fortressgames.fortressapi.utils.Vector2;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.users.UserModule;
 import net.fortressgames.regionmanager.utils.RegionMaths;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +22,7 @@ public class RegionModule {
 
 	public void addRegion(String name, int pri, RegionMaths regionMaths, World world, List<String> flags, String displayName) {
 		this.regions.put(name, new Region(name, pri, regionMaths, world, flags, displayName));
+		this.regions.get(name).save();
 	}
 
 	public void addRegion(String name, RegionMaths regionMaths, World world) {
@@ -48,29 +49,25 @@ public class RegionModule {
 	}
 
 	public void loadRegions() {
-		FileConfiguration file = RegionManager.getInstance().getConfig();
+		for(File file : new File(RegionManager.getInstance().getDataFolder() + "/Regions").listFiles()) {
+			Config config = new Config(file);
 
-		for(String region : file.getKeys(true)) {
+			List<Vector2> points = new ArrayList<>();
+			for(String pos : config.getConfig().getStringList("Pos")) {
+				String[] split = pos.split(",");
 
-			if(StringUtils.countMatches(region, ".") == 1) {
-
-				List<Vector2> points = new ArrayList<>();
-				for(int i = 0; i < file.getInt(region + ".NumberOfPoints"); i++) {
-					String[] split = file.getString(region + ".Pos" + i).split(",");
-
-					points.add(new Vector2(Integer.parseInt(split[0]), Integer.parseInt(split[1])));
-				}
-
-				RegionModule.getInstance().addRegion(
-						region.split("\\.")[1],
-						file.getInt(region + ".Pri"),
-
-						new RegionMaths(points, file.getInt(region + ".MaxY"), file.getInt(region + ".MinY")),
-
-						Bukkit.getWorld(file.getString(region + ".World")), file.getStringList(region + ".Flags"),
-						file.getString(region + ".DisplayName")
-				);
+				points.add(new Vector2(Integer.parseInt(split[0]), Integer.parseInt(split[1])));
 			}
+
+			RegionModule.getInstance().addRegion(
+					file.getName().replace(".yml", ""),
+					config.getConfig().getInt("Pri"),
+
+					new RegionMaths(points, config.getConfig().getInt("MaxY"), config.getConfig().getInt("MinY")),
+
+					Bukkit.getWorld(config.getConfig().getString("World")), config.getConfig().getStringList("Flags"),
+					config.getConfig().getString("DisplayName")
+			);
 		}
 
 		// Load global region
