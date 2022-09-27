@@ -13,6 +13,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class RegionCommand extends CommandBase {
 
 	public RegionCommand() {
@@ -169,5 +172,34 @@ public class RegionCommand extends CommandBase {
 		sender.sendMessage(ChatColor.WHITE + "/region pos clear " + ChatColor.GRAY + "- Clear all pos");
 		sender.sendMessage(ChatColor.WHITE + "/region show " + ChatColor.YELLOW + "[region] " + ChatColor.GRAY + "- Show region edge");
 		sender.sendMessage(Lang.LINE);
+	}
+
+	@Override
+	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+
+		if(args.length == 1) {
+			return Arrays.asList("help", "create", "remove", "list", "pri", "flag", "info", "setdisplay", "pos", "show");
+		}
+
+		if(args.length == 2) {
+			switch(args[0]) {
+				case "remove", "pri", "flag", "info", "setdisplay", "show" -> {
+					return RegionModule.getInstance().getAllByName();
+				}
+			}
+		}
+
+		if(args[0].equalsIgnoreCase("flag")) {
+
+			if(args.length == 3) {
+				return Arrays.asList("add", "remove");
+			}
+
+			if(args.length == 4) {
+				return RegionModule.getInstance().getFlags();
+			}
+		}
+
+		return super.tabComplete(sender, alias, args);
 	}
 }

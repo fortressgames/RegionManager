@@ -11,6 +11,7 @@ import org.bukkit.World;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +47,16 @@ public class RegionModule {
 
 	public List<Region> getAll() {
 		return new ArrayList<>(this.regions.values());
+	}
+
+	public List<String> getAllByName() {
+		List<String> out = new ArrayList<>();
+		this.regions.forEach((s, region) -> out.add(region.getName()));
+		return out;
+	}
+
+	public List<String> getFlags() {
+		return Arrays.asList("pvp", "title", "action_bar", "sound", "effect", "particle");
 	}
 
 	public void loadRegions() {

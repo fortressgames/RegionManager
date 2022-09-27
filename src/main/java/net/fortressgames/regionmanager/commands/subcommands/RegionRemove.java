@@ -11,6 +11,9 @@ public abstract class RegionRemove {
 	public static void execute(FortressPlayer player, Region region, String[] args) {
 
 		if(args.length == 2) {
+
+			if(region.equals(RegionModule.getInstance().getGlobal())) return;
+
 			RegionModule.getInstance().removeRegion(args[1]);
 			player.sendMessage(RegionLang.REGION_REMOVE);
 

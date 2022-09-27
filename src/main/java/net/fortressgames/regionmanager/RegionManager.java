@@ -81,11 +81,9 @@ public class RegionManager extends JavaPlugin {
 
 //TODO
 // allow setdisplay to handle more args without the need for _'s
-// display flags better in /rg info
-// flag list command? or tab
-// tab for all commands
 
 //TODO (pvp)
 // in pvp and enter non-pvp region handle
 // flag for allowing tagged players to enter non-pvp regions
 // handle death when tagged
+// events?
