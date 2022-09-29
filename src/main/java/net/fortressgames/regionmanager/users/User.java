@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class User {
+public class User extends FortressPlayerHolder {
 
 	@Getter private final List<Vector3> points = new ArrayList<>();
 	@Getter private final List<Region> regions = new ArrayList<>();

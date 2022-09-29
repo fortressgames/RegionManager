@@ -3,17 +3,20 @@ package net.fortressgames.regionmanager.events;
 import lombok.Getter;
 import net.fortressgames.fortressapi.events.FortressPlayerEvent;
 import net.fortressgames.fortressapi.players.FortressPlayer;
-import net.fortressgames.regionmanager.regions.Region;
+import net.fortressgames.regionmanager.utils.CombatTaggedCause;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
-public class EnterRegionEvent extends FortressPlayerEvent {
+public class CombatTaggedEvent extends FortressPlayerEvent {
 
 	private static final HandlerList HANDLERS = new HandlerList();
-	@Getter private final Region currentRegion;
+	@Getter private final CombatTaggedCause cause;
+	@Getter private final Player causedPlayer;
 
-	public EnterRegionEvent(FortressPlayer player, Region lastRegion) {
+	public CombatTaggedEvent(FortressPlayer player, CombatTaggedCause cause, Player causedPlayer) {
 		super(player);
-		this.currentRegion = lastRegion;
+		this.cause = cause;
+		this.causedPlayer = causedPlayer;
 	}
 
 	public HandlerList getHandlers() {

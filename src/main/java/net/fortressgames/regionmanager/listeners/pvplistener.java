@@ -1,11 +1,15 @@
 package net.fortressgames.regionmanager.listeners;
 
+import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
+import net.fortressgames.regionmanager.utils.CombatTaggedCause;
+import net.fortressgames.regionmanager.events.CombatTaggedEvent;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.tasks.CombatTask;
 import net.fortressgames.regionmanager.users.User;
 import net.fortressgames.regionmanager.users.UserModule;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +37,9 @@ public class pvplistener implements Listener {
 						return;
 					}
 				}
+
+				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(FortressPlayer.getPlayer(player), CombatTaggedCause.ATTACKED, target));
+				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(FortressPlayer.getPlayer(target), CombatTaggedCause.HIT, player));
 
 				tag(user, player);
 				tag(UserModule.getInstance().getUser(target), target);

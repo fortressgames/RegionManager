@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.fortressgames.fortressapi.commands.CommandModule;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.regionmanager.commands.RegionCommand;
+import net.fortressgames.regionmanager.listeners.DeathListener;
 import net.fortressgames.regionmanager.listeners.pvplistener;
 import net.fortressgames.regionmanager.regions.RegionModule;
 import net.fortressgames.regionmanager.tasks.MoveTask;
@@ -64,6 +65,7 @@ public class RegionManager extends JavaPlugin {
 		// Register events
 		this.getServer().getPluginManager().registerEvents(UserModule.getInstance(), this);
 		this.getServer().getPluginManager().registerEvents(new pvplistener(), this);
+		this.getServer().getPluginManager().registerEvents(new DeathListener(), this);
 
 		new MoveTask().runTaskTimer(this, TimeUnit.SECONDS, 1);
 
@@ -81,9 +83,8 @@ public class RegionManager extends JavaPlugin {
 
 //TODO
 // allow setdisplay to handle more args without the need for _'s
+// flag block entry
 
 //TODO (pvp)
 // in pvp and enter non-pvp region handle
 // flag for allowing tagged players to enter non-pvp regions
-// handle death when tagged
-// events?
