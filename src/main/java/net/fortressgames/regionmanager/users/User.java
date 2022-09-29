@@ -2,6 +2,8 @@ package net.fortressgames.regionmanager.users;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.fortressgames.fortressapi.players.FortressPlayer;
+import net.fortressgames.fortressapi.players.FortressPlayerHolder;
 import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.regions.RegionModule;
@@ -19,7 +21,8 @@ public class User extends FortressPlayerHolder {
 
 	@Setter @Getter private CombatTask combatTask;
 
-	public User() {
+	public User(FortressPlayer fortressPlayer) {
+		super(fortressPlayer);
 		regions.add(RegionModule.getInstance().getGlobal());
 	}
 

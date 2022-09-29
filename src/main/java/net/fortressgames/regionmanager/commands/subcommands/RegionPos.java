@@ -11,7 +11,7 @@ public abstract class RegionPos {
 
 	public static void execute(FortressPlayer player, Region region, String[] args) {
 
-		User user = UserModule.getInstance().getUser(player.getPlayer());
+		User user = UserModule.getInstance().getUser(player);
 
 		if(args.length == 2) {
 			user.getPoints().clear();

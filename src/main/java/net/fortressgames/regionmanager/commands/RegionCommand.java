@@ -109,20 +109,20 @@ public class RegionCommand extends CommandBase {
 		}
 		if(args[0].equalsIgnoreCase("info")) {
 
-			if(UserModule.getInstance().getUser(player.getPlayer()).getRegions().isEmpty()) {
+			if(UserModule.getInstance().getUser(player).getRegions().isEmpty()) {
 				sender.sendMessage(RegionLang.REGION_NOT_FOUND);
 				return;
 			}
 
-			if(UserModule.getInstance().getUser(player.getPlayer()).getRegions().size() == 1) {
-				player.getPlayer().performCommand("rg info " + UserModule.getInstance().getUser(player.getPlayer()).getRegions().get(0).getName());
+			if(UserModule.getInstance().getUser(player).getRegions().size() == 1) {
+				player.getPlayer().performCommand("rg info " + UserModule.getInstance().getUser(player).getRegions().get(0).getName());
 				return;
 			}
 
 			player.sendMessage(Lang.LINE);
 			player.sendMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + "Current regions:");
 
-			for(Region rg : UserModule.getInstance().getUser(player.getPlayer()).getRegions()) {
+			for(Region rg : UserModule.getInstance().getUser(player).getRegions()) {
 
 				player.sendClickableMessage(ChatColor.GREEN + rg.getName() + ": ",
 						ChatColor.WHITE + "[CLICK HERE]", "rg info " + rg.getName());

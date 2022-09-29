@@ -3,12 +3,12 @@ package net.fortressgames.regionmanager.listeners;
 import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
-import net.fortressgames.regionmanager.utils.CombatTaggedCause;
 import net.fortressgames.regionmanager.events.CombatTaggedEvent;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.tasks.CombatTask;
 import net.fortressgames.regionmanager.users.User;
 import net.fortressgames.regionmanager.users.UserModule;
+import net.fortressgames.regionmanager.utils.CombatTaggedCause;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,11 +21,12 @@ public class pvplistener implements Listener {
 	public void EntityDamageFortress(EntityDamageByEntityEvent e) {
 
 		if(e.getDamager() instanceof Player player) {
+			User playerUser = UserModule.getInstance().getUser(FortressPlayer.getPlayer(player));
+
 			if(e.getEntity() instanceof Player target) {
+				User targetUser = UserModule.getInstance().getUser(FortressPlayer.getPlayer(target));
 
-				User user = UserModule.getInstance().getUser(player);
-
-				for(Region region : user.getRegionsInOrder()) {
+				for(Region region : playerUser.getRegionsInOrder()) {
 					if(region.getFlags().contains("PVP_TRUE")) {
 						break;
 					}
@@ -33,21 +34,21 @@ public class pvplistener implements Listener {
 					if(region.getFlags().contains("PVP_FALSE")) {
 
 						e.setCancelled(true);
-						player.sendMessage(RegionLang.PVP_FALSE);
+						playerUser.getFortressPlayer().sendMessage(RegionLang.PVP_FALSE);
 						return;
 					}
 				}
 
-				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(FortressPlayer.getPlayer(player), CombatTaggedCause.ATTACKED, target));
-				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(FortressPlayer.getPlayer(target), CombatTaggedCause.HIT, player));
+				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(playerUser.getFortressPlayer(), CombatTaggedCause.ATTACKED, targetUser.getFortressPlayer()));
+				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(targetUser.getFortressPlayer(), CombatTaggedCause.HIT, playerUser.getFortressPlayer()));
 
-				tag(user, player);
-				tag(UserModule.getInstance().getUser(target), target);
+				tag(playerUser, playerUser.getFortressPlayer());
+				tag(targetUser, targetUser.getFortressPlayer());
 			}
 		}
 	}
 
-	private void tag(User user, Player player) {
+	private void tag(User user, FortressPlayer player) {
 		if(user.getCombatTask() == null) {
 			user.setCombatTask(new CombatTask(user, player));
 			player.sendMessage(RegionLang.COMBAT_TAG_ON);

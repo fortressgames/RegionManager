@@ -27,16 +27,16 @@ public class MoveTask extends FortressRunnable {
 		for(FortressPlayer pp : FortressPlayerModule.getInstance().getAllUsers()) {
 
 			// Add user if they are null (this happens after reload)
-			if(UserModule.getInstance().getUser(pp.getPlayer()) == null) {
-				UserModule.getInstance().addUser(pp.getPlayer());
+			if(UserModule.getInstance().getUser(pp) == null) {
+				UserModule.getInstance().addUser(pp);
 			}
 
 			check(pp);
 		}
 	}
 
-	public static void check(FortressPlayer player) {
-		User user = UserModule.getInstance().getUser(player.getPlayer());
+	public static void check(FortressPlayer fortressPlayer) {
+		User user = UserModule.getInstance().getUser(fortressPlayer);
 
 		// List of all regions the player is inside of
 		List<Region> currentInsideRegions = new ArrayList<>();
@@ -45,9 +45,9 @@ public class MoveTask extends FortressRunnable {
 
 			if(region.getName().equals("global")) continue;
 
-			if(region.getRegionMaths().inside(new Vector3(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()))) {
+			if(region.getRegionMaths().inside(new Vector3(fortressPlayer.getLocation().getBlockX(), fortressPlayer.getLocation().getBlockY(), fortressPlayer.getLocation().getBlockZ()))) {
 
-				if(player.getWorld().equals(region.getWorld())) {
+				if(fortressPlayer.getWorld().equals(region.getWorld())) {
 					currentInsideRegions.add(region);
 				}
 			}
@@ -59,14 +59,14 @@ public class MoveTask extends FortressRunnable {
 			if(!user.getRegions().contains(inside)) {
 				user.getRegions().add(inside);
 
-				Bukkit.getScheduler().runTask(RegionManager.getInstance(), () -> Bukkit.getPluginManager().callEvent(new EnterRegionEvent(player, inside)));
+				Bukkit.getScheduler().runTask(RegionManager.getInstance(), () -> Bukkit.getPluginManager().callEvent(new EnterRegionEvent(fortressPlayer, inside)));
 
 				if(inside.getFlags().contains("TITLE_TRUE")) {
-					player.sendTitle(ChatColor.translateAlternateColorCodes('&', inside.getDisplayName()), "", 10, 40, 10);
+					fortressPlayer.sendTitle(ChatColor.translateAlternateColorCodes('&', inside.getDisplayName()), "", 10, 40, 10);
 				}
 
 				if(inside.getFlags().contains("ACTION_BAR_TRUE")) {
-					player.sendActionBar(inside.getDisplayName());
+					fortressPlayer.sendActionBar(inside.getDisplayName());
 				}
 
 				for(String flag : inside.getFlags()) {
@@ -77,14 +77,14 @@ public class MoveTask extends FortressRunnable {
 						// EXAMPLE SOUND _ BLOCK_NOTE_BLOCK_BELL
 						case "SOUND" -> {
 							try {
-								player.playSound(Sound.valueOf(flag.replace("SOUND_", "").toUpperCase()));
+								fortressPlayer.playSound(Sound.valueOf(flag.replace("SOUND_", "").toUpperCase()));
 							} catch (IllegalArgumentException ignored) {}
 						}
 
 						// EXAMPLE EFFECT _ JUMP _ 10
 						case "EFFECT" -> {
 							try {
-								player.addPotionEffect(PotionEffectType.getByName(flag.split("_")[1].toUpperCase()),
+								fortressPlayer.addPotionEffect(PotionEffectType.getByName(flag.split("_")[1].toUpperCase()),
 										Integer.MAX_VALUE, Integer.parseInt(flag.split("_")[2]));
 							} catch (IllegalArgumentException ignored) {}
 						}
@@ -104,7 +104,7 @@ public class MoveTask extends FortressRunnable {
 				if(region.equals(RegionModule.getInstance().getGlobal())) return false;
 
 				if(!currentInsideRegions.contains(region)) {
-					Bukkit.getScheduler().runTask(RegionManager.getInstance(), () -> Bukkit.getPluginManager().callEvent(new LeaveRegionEvent(player, region)));
+					Bukkit.getScheduler().runTask(RegionManager.getInstance(), () -> Bukkit.getPluginManager().callEvent(new LeaveRegionEvent(fortressPlayer, region)));
 
 					for(String flag : region.getFlags()) {
 						if(flag.contains("ACTION") || flag.contains("TITLE")) continue;
@@ -114,14 +114,14 @@ public class MoveTask extends FortressRunnable {
 							// EXAMPLE SOUND _ BLOCK_NOTE_BLOCK_BELL
 							case "SOUND" -> {
 								try {
-									player.stopSound(Sound.valueOf(flag.replace("SOUND_", "").toUpperCase()));
+									fortressPlayer.stopSound(Sound.valueOf(flag.replace("SOUND_", "").toUpperCase()));
 								} catch (IllegalArgumentException ignored) {}
 							}
 
 							// EXAMPLE EFFECT _ JUMP
 							case "EFFECT" -> {
 								try {
-									player.removePotionEffect(PotionEffectType.getByName(flag.split("_")[1].toUpperCase()));
+									fortressPlayer.removePotionEffect(PotionEffectType.getByName(flag.split("_")[1].toUpperCase()));
 								} catch (IllegalArgumentException ignored) {}
 							}
 						}

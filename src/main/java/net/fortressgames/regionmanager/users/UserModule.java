@@ -1,9 +1,9 @@
 package net.fortressgames.regionmanager.users;
 
+import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,7 +16,7 @@ import java.util.List;
 public class UserModule implements Listener {
 
 	private static UserModule instance;
-	private final HashMap<Player, User> users = new HashMap<>();
+	private final HashMap<FortressPlayer, User> users = new HashMap<>();
 
 	public static UserModule getInstance() {
 		if(instance == null) {
@@ -26,12 +26,12 @@ public class UserModule implements Listener {
 		return instance;
 	}
 
-	public User getUser(Player player) {
-		return this.users.get(player);
+	public User getUser(FortressPlayer fortressPlayer) {
+		return this.users.get(fortressPlayer);
 	}
 
-	public void addUser(Player player) {
-		this.users.put(player, new User());
+	public void addUser(FortressPlayer fortressPlayer) {
+		this.users.put(fortressPlayer, new User(fortressPlayer));
 	}
 
 	public List<User> getAllUsers() {
@@ -40,22 +40,22 @@ public class UserModule implements Listener {
 
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent e) {
-		this.addUser(e.getPlayer());
+		this.addUser(FortressPlayer.getPlayer(e.getPlayer()));
 	}
 
 	@EventHandler
 	public void playerQuit(PlayerQuitEvent e) {
-		Player player = e.getPlayer();
+		FortressPlayer fortressPlayer = FortressPlayer.getPlayer(e.getPlayer());
 
 		if(RegionManager.getInstance().isCombatLog()) {
-			if(getUser(player).getCombatTask() != null) {
+			if(getUser(fortressPlayer).getCombatTask() != null) {
 				//combat logged!
-				player.setHealth(0);
+				fortressPlayer.setHealth(0);
 
 				FortressPlayerModule.getInstance().getOnlinePlayers().forEach(target -> target.sendMessage(RegionLang.combatLogged(target.getDisplayName())));
 			}
 		}
 
-		this.users.remove(player);
+		this.users.remove(fortressPlayer);
 	}
 }
