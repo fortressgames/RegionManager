@@ -4,6 +4,7 @@ import net.fortressgames.fortressapi.FortressRunnable;
 import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.fortressapi.utils.Vector3;
+import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.events.EnterRegionEvent;
 import net.fortressgames.regionmanager.events.LeaveRegionEvent;
@@ -13,11 +14,13 @@ import net.fortressgames.regionmanager.users.User;
 import net.fortressgames.regionmanager.users.UserModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.List;
 
 public class MoveTask extends FortressRunnable {
@@ -57,6 +60,24 @@ public class MoveTask extends FortressRunnable {
 		for(Region inside : currentInsideRegions) {
 
 			if(!user.getRegions().contains(inside)) {
+
+				if(user.getCombatTask() != null) {
+					if(inside.getFlags().contains("PVP_FALSE")) {
+						fortressPlayer.getPlayer().teleport(user.getLastLocation());
+						fortressPlayer.sendMessage(RegionLang.ENTRY_COMBAT);
+						continue;
+					}
+				}
+
+				if(inside.getFlags().contains("ENTRY_FALSE")) {
+
+					if(!inside.getMembers().contains(fortressPlayer.getPlayer().getName())) {
+						fortressPlayer.getPlayer().teleport(user.getLastLocation());
+						fortressPlayer.sendMessage(RegionLang.ENTRY);
+						continue;
+					}
+				}
+
 				user.getRegions().add(inside);
 
 				Bukkit.getScheduler().runTask(RegionManager.getInstance(), () -> Bukkit.getPluginManager().callEvent(new EnterRegionEvent(fortressPlayer, inside)));
@@ -93,6 +114,7 @@ public class MoveTask extends FortressRunnable {
 			}
 		}
 
+		user.setLastLocation(fortressPlayer.getLocation());
 
 		if(user.getRegions().isEmpty()) return;
 

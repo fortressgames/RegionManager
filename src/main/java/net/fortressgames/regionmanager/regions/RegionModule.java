@@ -21,13 +21,13 @@ public class RegionModule {
 	private final HashMap<String, Region> regions = new HashMap<>();
 	@Getter private Region global;
 
-	public void addRegion(String name, int pri, RegionMaths regionMaths, World world, List<String> flags, String displayName) {
-		this.regions.put(name, new Region(name, pri, regionMaths, world, flags, displayName));
+	public void addRegion(String name, int pri, RegionMaths regionMaths, World world, List<String> flags, String displayName, List<String> members) {
+		this.regions.put(name, new Region(name, pri, regionMaths, world, flags, displayName, members));
 		this.regions.get(name).save();
 	}
 
 	public void addRegion(String name, RegionMaths regionMaths, World world) {
-		this.regions.put(name, new Region(name, 0, regionMaths, world, new ArrayList<>(), name));
+		this.regions.put(name, new Region(name, 0, regionMaths, world, new ArrayList<>(), name, new ArrayList<>()));
 		this.regions.get(name).save();
 	}
 
@@ -56,7 +56,7 @@ public class RegionModule {
 	}
 
 	public List<String> getFlags() {
-		return Arrays.asList("pvp", "title", "action_bar", "sound", "effect", "particle");
+		return Arrays.asList("pvp", "title", "action_bar", "sound", "effect", "particle", "entry");
 	}
 
 	public void loadRegions() {
@@ -77,7 +77,8 @@ public class RegionModule {
 					new RegionMaths(points, config.getConfig().getInt("MaxY"), config.getConfig().getInt("MinY")),
 
 					Bukkit.getWorld(config.getConfig().getString("World")), config.getConfig().getStringList("Flags"),
-					config.getConfig().getString("DisplayName")
+					config.getConfig().getString("DisplayName"),
+					config.getConfig().getStringList("Members")
 			);
 		}
 

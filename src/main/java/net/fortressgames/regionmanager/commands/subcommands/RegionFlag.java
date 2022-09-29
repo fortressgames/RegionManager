@@ -14,7 +14,7 @@ public abstract class RegionFlag {
 
 				switch(args[3].toUpperCase()) {
 
-					case "PVP", "TITLE", "ACTION_BAR" -> {
+					case "PVP", "TITLE", "ACTION_BAR", "ENTRY" -> {
 						try {
 							region.addFlag(args[3].toUpperCase() + "_" + args[4].toUpperCase(),
 									args[3].toUpperCase());

@@ -8,6 +8,7 @@ import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.regions.RegionModule;
 import net.fortressgames.regionmanager.tasks.CombatTask;
+import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,9 +21,11 @@ public class User extends FortressPlayerHolder {
 	@Getter private final List<Region> regions = new ArrayList<>();
 
 	@Setter @Getter private CombatTask combatTask;
+	@Setter @Getter private Location lastLocation;
 
 	public User(FortressPlayer fortressPlayer) {
 		super(fortressPlayer);
+		lastLocation = fortressPlayer.getLocation();
 		regions.add(RegionModule.getInstance().getGlobal());
 	}
 

@@ -47,6 +47,7 @@ public abstract class RegionInformation {
 		);
 
 		player.sendMessage(ChatColor.AQUA + "Display Name: " + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', region.getDisplayName()));
+		player.sendMessage(ChatColor.AQUA + "Members: " + ChatColor.WHITE + region.getMembers().toString());
 		player.sendMessage(Lang.LINE);
 	}
 }

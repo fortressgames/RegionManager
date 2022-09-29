@@ -19,6 +19,11 @@ public class RegionLang {
 	public static final String PVP_FALSE = Lang.RED + "PVP is disabled here!";
 	public static final String COMBAT_TAG_ON = Lang.YELLOW + "You are in combat don't logout!!";
 	public static final String COMBAT_TAG_OFF = Lang.YELLOW + "You are no longer in combat you are safe!";
+	public static final String ENTRY = Lang.RED + "You cannot enter this region!";
+	public static final String ENTRY_COMBAT = Lang.RED + "You are in combat, You cannot enter this region!";
+	public static final String MEMBER_ADD = Lang.GREEN + "Member added to region!";
+	public static final String MEMBER_REMOVE = Lang.GREEN + "Member removed from region!";
+	public static final String ALREADY_MEMBER = Lang.RED + "Player is already a member of that region!";
 
 	public static String combatLogged(String player) {
 		return Lang.RED + player + " combat logged and died!";

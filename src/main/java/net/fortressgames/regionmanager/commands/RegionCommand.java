@@ -153,6 +153,14 @@ public class RegionCommand extends CommandBase {
 		//
 		if(args[0].equalsIgnoreCase("show")) {
 			RegionShow.execute(player, region, args);
+			return;
+		}
+
+		//
+		// MEMBERS
+		//
+		if(args[0].equalsIgnoreCase("member")) {
+			RegionMembers.execute(player, region, args);
 		}
 	}
 
@@ -171,6 +179,9 @@ public class RegionCommand extends CommandBase {
 		sender.sendMessage(ChatColor.WHITE + "/region pos " + ChatColor.GRAY + "- Set a pos at your location");
 		sender.sendMessage(ChatColor.WHITE + "/region pos clear " + ChatColor.GRAY + "- Clear all pos");
 		sender.sendMessage(ChatColor.WHITE + "/region show " + ChatColor.YELLOW + "[region] " + ChatColor.GRAY + "- Show region edge");
+		sender.sendMessage(ChatColor.WHITE + "/region member " + ChatColor.YELLOW + "[region] " + ChatColor.WHITE + "add " + ChatColor.YELLOW + "[name] " + ChatColor.GRAY + "- Adds members to the region");
+		sender.sendMessage(ChatColor.WHITE + "/region member " + ChatColor.YELLOW + "[region] " + ChatColor.WHITE + "remove " + ChatColor.YELLOW + "[name] " + ChatColor.GRAY + "- Removes members from region");
+
 		sender.sendMessage(Lang.LINE);
 	}
 
@@ -178,23 +189,24 @@ public class RegionCommand extends CommandBase {
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
 
 		if(args.length == 1) {
-			return Arrays.asList("help", "create", "remove", "list", "pri", "flag", "info", "setdisplay", "pos", "show");
+			return Arrays.asList("help", "create", "remove", "list", "pri", "flag", "info", "setdisplay", "pos", "show", "member");
 		}
 
 		if(args.length == 2) {
 			switch(args[0]) {
-				case "remove", "pri", "flag", "info", "setdisplay", "show" -> {
+				case "remove", "pri", "flag", "info", "setdisplay", "show", "member" -> {
 					return RegionModule.getInstance().getAllByName();
 				}
 			}
 		}
 
-		if(args[0].equalsIgnoreCase("flag")) {
-
+		if(args[0].equalsIgnoreCase("flag") || args[0].equalsIgnoreCase("member")) {
 			if(args.length == 3) {
 				return Arrays.asList("add", "remove");
 			}
+		}
 
+		if(args[0].equalsIgnoreCase("flag")) {
 			if(args.length == 4) {
 				return RegionModule.getInstance().getFlags();
 			}

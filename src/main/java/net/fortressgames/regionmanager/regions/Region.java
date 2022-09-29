@@ -25,6 +25,8 @@ public class Region {
 	@Setter	@Getter	private int pri;
 	@Getter private final RegionMaths regionMaths;
 
+	@Getter private final List<String> members;
+
 	@Getter private final World world;
 
 	@Getter private final List<String> flags;
@@ -32,7 +34,7 @@ public class Region {
 
 	@Getter private final List<Vector3> allPoints;
 
-	public Region(String name, int pri, RegionMaths regionMaths, World world, List<String> flags, String displayName) {
+	public Region(String name, int pri, RegionMaths regionMaths, World world, List<String> flags, String displayName, List<String> members) {
 		this.world = world;
 
 		this.name = name;
@@ -40,6 +42,7 @@ public class Region {
 		this.pri = pri;
 		this.regionMaths = regionMaths;
 		this.flags = flags;
+		this.members = members;
 
 		this.allPoints = regionMaths.getAllPoints();
 
@@ -68,6 +71,8 @@ public class Region {
 
 		config.getConfig().set("Flags", flags);
 		config.getConfig().set("DisplayName", this.displayName);
+
+		config.getConfig().set("Members", members);
 
 		config.save();
 	}

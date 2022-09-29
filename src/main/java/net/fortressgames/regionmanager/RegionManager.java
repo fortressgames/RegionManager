@@ -67,7 +67,7 @@ public class RegionManager extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(new pvplistener(), this);
 		this.getServer().getPluginManager().registerEvents(new DeathListener(), this);
 
-		new MoveTask().runTaskTimer(this, TimeUnit.SECONDS, 1);
+		new MoveTask().runTaskTimer(this, TimeUnit.MILLISECONDS, 15);
 
 		getLogger().info(ConsoleMessage.GREEN + "Version: " + getDescription().getVersion() + " Enabled!" + ConsoleMessage.RESET);
 	}
@@ -81,10 +81,5 @@ public class RegionManager extends JavaPlugin {
 	}
 }
 
-//TODO
-// allow setdisplay to handle more args without the need for _'s
-// flag block entry
-
 //TODO (pvp)
-// in pvp and enter non-pvp region handle
-// flag for allowing tagged players to enter non-pvp regions
+// test combat enter non-pvp region
