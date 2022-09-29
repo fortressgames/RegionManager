@@ -4,6 +4,7 @@ import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,7 +17,7 @@ import java.util.List;
 public class UserModule implements Listener {
 
 	private static UserModule instance;
-	private final HashMap<FortressPlayer, User> users = new HashMap<>();
+	private final HashMap<Player, User> users = new HashMap<>();
 
 	public static UserModule getInstance() {
 		if(instance == null) {
@@ -26,12 +27,12 @@ public class UserModule implements Listener {
 		return instance;
 	}
 
-	public User getUser(FortressPlayer fortressPlayer) {
-		return this.users.get(fortressPlayer);
+	public User getUser(Player player) {
+		return this.users.get(player);
 	}
 
-	public void addUser(FortressPlayer fortressPlayer) {
-		this.users.put(fortressPlayer, new User(fortressPlayer));
+	public void addUser(Player player) {
+		this.users.put(player, new User(FortressPlayer.getPlayer(player)));
 	}
 
 	public List<User> getAllUsers() {
@@ -40,7 +41,7 @@ public class UserModule implements Listener {
 
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent e) {
-		this.addUser(FortressPlayer.getPlayer(e.getPlayer()));
+		this.addUser(e.getPlayer());
 	}
 
 	@EventHandler
@@ -48,7 +49,7 @@ public class UserModule implements Listener {
 		FortressPlayer fortressPlayer = FortressPlayer.getPlayer(e.getPlayer());
 
 		if(RegionManager.getInstance().isCombatLog()) {
-			if(getUser(fortressPlayer).getCombatTask() != null) {
+			if(getUser(e.getPlayer()).getCombatTask() != null) {
 				//combat logged!
 				fortressPlayer.setHealth(0);
 
@@ -56,6 +57,6 @@ public class UserModule implements Listener {
 			}
 		}
 
-		this.users.remove(fortressPlayer);
+		this.users.remove(e.getPlayer());
 	}
 }

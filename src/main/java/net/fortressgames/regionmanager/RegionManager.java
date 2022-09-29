@@ -81,5 +81,5 @@ public class RegionManager extends JavaPlugin {
 	}
 }
 
-//TODO (pvp)
-// test combat enter non-pvp region
+//TODO
+// reload command

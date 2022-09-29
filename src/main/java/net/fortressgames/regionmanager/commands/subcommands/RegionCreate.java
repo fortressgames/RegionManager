@@ -23,7 +23,7 @@ public abstract class RegionCreate {
 				return;
 			}
 
-			if(UserModule.getInstance().getUser(player).getPoints().size() == 0) {
+			if(UserModule.getInstance().getUser(player.getPlayer()).getPoints().size() == 0) {
 				player.sendMessage(RegionLang.REGION_NOT_FOUND_RUN_POS);
 				return;
 			}
@@ -32,7 +32,7 @@ public abstract class RegionCreate {
 			int maxY = 0;
 			int minY = 300;
 
-			for(Vector3 p : UserModule.getInstance().getUser(player).getPoints()) {
+			for(Vector3 p : UserModule.getInstance().getUser(player.getPlayer()).getPoints()) {
 				point.add(p.toVector2());
 
 				if(maxY < p.getBlockY()) {
@@ -46,7 +46,7 @@ public abstract class RegionCreate {
 
 			RegionModule.getInstance().addRegion(args[1], new RegionMaths(point, maxY, minY), player.getWorld());
 
-			UserModule.getInstance().getUser(player).getPoints().clear();
+			UserModule.getInstance().getUser(player.getPlayer()).getPoints().clear();
 
 			player.sendMessage(RegionLang.REGION_ADDED);
 		}

@@ -30,8 +30,8 @@ public class MoveTask extends FortressRunnable {
 		for(FortressPlayer pp : FortressPlayerModule.getInstance().getAllUsers()) {
 
 			// Add user if they are null (this happens after reload)
-			if(UserModule.getInstance().getUser(pp) == null) {
-				UserModule.getInstance().addUser(pp);
+			if(UserModule.getInstance().getUser(pp.getPlayer()) == null) {
+				UserModule.getInstance().addUser(pp.getPlayer());
 			}
 
 			check(pp);
@@ -39,7 +39,7 @@ public class MoveTask extends FortressRunnable {
 	}
 
 	public static void check(FortressPlayer fortressPlayer) {
-		User user = UserModule.getInstance().getUser(fortressPlayer);
+		User user = UserModule.getInstance().getUser(fortressPlayer.getPlayer());
 
 		// List of all regions the player is inside of
 		List<Region> currentInsideRegions = new ArrayList<>();

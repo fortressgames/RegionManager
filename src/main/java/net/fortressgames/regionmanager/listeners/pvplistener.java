@@ -21,10 +21,10 @@ public class pvplistener implements Listener {
 	public void EntityDamageFortress(EntityDamageByEntityEvent e) {
 
 		if(e.getDamager() instanceof Player player) {
-			User playerUser = UserModule.getInstance().getUser(FortressPlayer.getPlayer(player));
+			User playerUser = UserModule.getInstance().getUser(player);
 
 			if(e.getEntity() instanceof Player target) {
-				User targetUser = UserModule.getInstance().getUser(FortressPlayer.getPlayer(target));
+				User targetUser = UserModule.getInstance().getUser(target);
 
 				for(Region region : playerUser.getRegionsInOrder()) {
 					if(region.getFlags().contains("PVP_TRUE")) {
