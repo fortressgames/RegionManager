@@ -24,6 +24,7 @@ public class RegionLang {
 	public static final String MEMBER_ADD = Lang.GREEN + "Member added to region!";
 	public static final String MEMBER_REMOVE = Lang.GREEN + "Member removed from region!";
 	public static final String ALREADY_MEMBER = Lang.RED + "Player is already a member of that region!";
+	public static final String RELOAD = Lang.GREEN + "Plugin reloaded!";
 
 	public static String combatLogged(String player) {
 		return Lang.RED + player + " combat logged and died!";

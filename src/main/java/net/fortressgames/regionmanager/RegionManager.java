@@ -43,19 +43,7 @@ public class RegionManager extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		if(!getConfig().contains("COMBAT_LOGGING")) {
-			getConfig().set("COMBAT_LOGGING", false);
-			saveConfig();
-		} else {
-			combatLog = getConfig().getBoolean("COMBAT_LOGGING");
-		}
-
-		if(!getConfig().contains("COMBAT_LOGGING_DELAY")) {
-			getConfig().set("COMBAT_LOGGING_DELAY", 30);
-			saveConfig();
-		} else {
-			combatLogTimer = getConfig().getInt("COMBAT_LOGGING_DELAY");
-		}
+		loadConfig();
 
 		// Register commands
 		CommandModule.registerCommand(new RegionCommand());
@@ -79,7 +67,20 @@ public class RegionManager extends JavaPlugin {
 	public void onDisable() {
 		getLogger().info(ConsoleMessage.RED + "Version: " + getDescription().getVersion() + " Disabled!" + ConsoleMessage.RESET);
 	}
-}
 
-//TODO
-// reload command
+	public void loadConfig() {
+		if(!getConfig().contains("COMBAT_LOGGING")) {
+			getConfig().set("COMBAT_LOGGING", false);
+			saveConfig();
+		} else {
+			combatLog = getConfig().getBoolean("COMBAT_LOGGING");
+		}
+
+		if(!getConfig().contains("COMBAT_LOGGING_DELAY")) {
+			getConfig().set("COMBAT_LOGGING_DELAY", 30);
+			saveConfig();
+		} else {
+			combatLogTimer = getConfig().getInt("COMBAT_LOGGING_DELAY");
+		}
+	}
+}

@@ -35,6 +35,10 @@ public class UserModule implements Listener {
 		this.users.put(player, new User(FortressPlayer.getPlayer(player)));
 	}
 
+	public void clearUsers() {
+		this.users.clear();
+	}
+
 	public List<User> getAllUsers() {
 		return new ArrayList<>(users.values());
 	}

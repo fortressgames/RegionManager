@@ -60,6 +60,8 @@ public class RegionModule {
 	}
 
 	public void loadRegions() {
+		regions.clear();
+
 		for(File file : new File(RegionManager.getInstance().getDataFolder() + "/Regions").listFiles()) {
 			Config config = new Config(file);
 

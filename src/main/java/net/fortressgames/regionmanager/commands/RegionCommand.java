@@ -3,8 +3,10 @@ package net.fortressgames.regionmanager.commands;
 import net.fortressgames.fortressapi.Lang;
 import net.fortressgames.fortressapi.commands.CommandBase;
 import net.fortressgames.fortressapi.players.FortressPlayer;
+import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.regionmanager.PermissionLang;
 import net.fortressgames.regionmanager.RegionLang;
+import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.commands.subcommands.*;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.regions.RegionModule;
@@ -161,6 +163,23 @@ public class RegionCommand extends CommandBase {
 		//
 		if(args[0].equalsIgnoreCase("member")) {
 			RegionMembers.execute(player, region, args);
+			return;
+		}
+
+		//
+		// RELOAD
+		//
+		if(args[0].equalsIgnoreCase("reload")) {
+			RegionManager.getInstance().loadConfig();
+			RegionModule.getInstance().loadRegions();
+
+			UserModule.getInstance().getAllUsers().forEach(user -> {
+				if(user.getCombatTask() != null)  user.getCombatTask().cancel();
+			});
+			UserModule.getInstance().clearUsers();
+			FortressPlayerModule.getInstance().getOnlinePlayers().forEach(pp -> UserModule.getInstance().addUser(pp));
+
+			sender.sendMessage(RegionLang.RELOAD);
 		}
 	}
 
@@ -181,7 +200,7 @@ public class RegionCommand extends CommandBase {
 		sender.sendMessage(ChatColor.WHITE + "/region show " + ChatColor.YELLOW + "[region] " + ChatColor.GRAY + "- Show region edge");
 		sender.sendMessage(ChatColor.WHITE + "/region member " + ChatColor.YELLOW + "[region] " + ChatColor.WHITE + "add " + ChatColor.YELLOW + "[name] " + ChatColor.GRAY + "- Adds members to the region");
 		sender.sendMessage(ChatColor.WHITE + "/region member " + ChatColor.YELLOW + "[region] " + ChatColor.WHITE + "remove " + ChatColor.YELLOW + "[name] " + ChatColor.GRAY + "- Removes members from region");
-
+		sender.sendMessage(ChatColor.WHITE + "/region reload " + ChatColor.GRAY + "Reload plugin!");
 		sender.sendMessage(Lang.LINE);
 	}
 
@@ -189,7 +208,7 @@ public class RegionCommand extends CommandBase {
 	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
 
 		if(args.length == 1) {
-			return Arrays.asList("help", "create", "remove", "list", "pri", "flag", "info", "setdisplay", "pos", "show", "member");
+			return Arrays.asList("help", "create", "remove", "list", "pri", "flag", "info", "setdisplay", "pos", "show", "member", "reload");
 		}
 
 		if(args.length == 2) {
