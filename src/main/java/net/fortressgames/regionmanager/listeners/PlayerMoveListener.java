@@ -33,6 +33,7 @@ public class PlayerMoveListener implements Listener {
 	}
 
 	public static void check(Player player) {
+		if(UserModule.getInstance().getUser(player) == null) return;
 		User user = UserModule.getInstance().getUser(player);
 
 		// List of all regions the player is inside of

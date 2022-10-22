@@ -2,6 +2,7 @@ package net.fortressgames.regionmanager;
 
 import lombok.Getter;
 import net.fortressgames.fortressapi.commands.CommandModule;
+import net.fortressgames.fortressapi.players.PlayerModule;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.regionmanager.commands.RegionCommand;
 import net.fortressgames.regionmanager.listeners.DeathListener;
@@ -9,6 +10,7 @@ import net.fortressgames.regionmanager.listeners.PlayerMoveListener;
 import net.fortressgames.regionmanager.listeners.pvplistener;
 import net.fortressgames.regionmanager.regions.RegionModule;
 import net.fortressgames.regionmanager.users.UserModule;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -54,6 +56,11 @@ public class RegionManager extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(UserModule.getInstance(), this);
 		this.getServer().getPluginManager().registerEvents(new pvplistener(), this);
 		this.getServer().getPluginManager().registerEvents(new DeathListener(), this);
+
+		// Adds players after reload
+		for(Player pp : PlayerModule.getInstance().getOnlinePlayers()) {
+			UserModule.getInstance().addUser(pp);
+		}
 
 		getLogger().info(ConsoleMessage.GREEN + "Version: " + getDescription().getVersion() + " Enabled!" + ConsoleMessage.RESET);
 	}

@@ -52,7 +52,7 @@ public class UserModule implements Listener {
 		Player player = e.getPlayer();
 
 		if(RegionManager.getInstance().isCombatLog()) {
-			if(getUser(e.getPlayer()).getCombatTask() != null) {
+			if(getUser(player) != null && getUser(player).getCombatTask() != null) {
 				//combat logged!
 				player.setHealth(0);
 
