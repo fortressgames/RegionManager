@@ -2,24 +2,24 @@ package net.fortressgames.regionmanager.tasks;
 
 import lombok.Setter;
 import net.fortressgames.fortressapi.FortressRunnable;
-import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.events.LeaveCombatTaggedEvent;
 import net.fortressgames.regionmanager.users.User;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
 
 public class CombatTask extends FortressRunnable {
 
 	private final User user;
-	private final FortressPlayer fortressPlayer;
+	private final Player player;
 	@Setter private int count;
 
-	public CombatTask(User user, FortressPlayer fortressPlayer) {
+	public CombatTask(User user, Player player) {
 		this.user = user;
-		this.fortressPlayer = fortressPlayer;
+		this.player = player;
 		count = RegionManager.getInstance().getCombatLogTimer();
 
 		runTaskTimer(RegionManager.getInstance(), TimeUnit.SECONDS, 1);
@@ -33,10 +33,10 @@ public class CombatTask extends FortressRunnable {
 		if(count == 0) {
 			cancel();
 			user.setCombatTask(null);
-			fortressPlayer.sendMessage(RegionLang.COMBAT_TAG_OFF);
+			player.sendMessage(RegionLang.COMBAT_TAG_OFF);
 
 			Bukkit.getScheduler().runTask(RegionManager.getInstance(), () ->
-					Bukkit.getPluginManager().callEvent(new LeaveCombatTaggedEvent(fortressPlayer)));
+					Bukkit.getPluginManager().callEvent(new LeaveCombatTaggedEvent(player)));
 		}
 	}
 }

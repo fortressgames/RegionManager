@@ -1,6 +1,5 @@
 package net.fortressgames.regionmanager.listeners;
 
-import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.events.LeaveCombatTaggedEvent;
 import net.fortressgames.regionmanager.users.User;
@@ -21,7 +20,7 @@ public class DeathListener implements Listener {
 			user.setCombatTask(null);
 
 			Bukkit.getScheduler().runTask(RegionManager.getInstance(), () ->
-					Bukkit.getPluginManager().callEvent(new LeaveCombatTaggedEvent(FortressPlayer.getPlayer(e.getEntity()))));
+					Bukkit.getPluginManager().callEvent(new LeaveCombatTaggedEvent(e.getEntity())));
 		}
 	}
 }

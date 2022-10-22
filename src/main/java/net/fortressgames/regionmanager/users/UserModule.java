@@ -1,7 +1,6 @@
 package net.fortressgames.regionmanager.users;
 
-import net.fortressgames.fortressapi.players.FortressPlayer;
-import net.fortressgames.fortressapi.players.FortressPlayerModule;
+import net.fortressgames.fortressapi.players.PlayerModule;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
 import org.bukkit.entity.Player;
@@ -32,7 +31,7 @@ public class UserModule implements Listener {
 	}
 
 	public void addUser(Player player) {
-		this.users.put(player, new User(FortressPlayer.getPlayer(player)));
+		this.users.put(player, new User(player));
 	}
 
 	public void clearUsers() {
@@ -50,14 +49,14 @@ public class UserModule implements Listener {
 
 	@EventHandler
 	public void playerQuit(PlayerQuitEvent e) {
-		FortressPlayer fortressPlayer = FortressPlayer.getPlayer(e.getPlayer());
+		Player player = e.getPlayer();
 
 		if(RegionManager.getInstance().isCombatLog()) {
 			if(getUser(e.getPlayer()).getCombatTask() != null) {
 				//combat logged!
-				fortressPlayer.setHealth(0);
+				player.setHealth(0);
 
-				FortressPlayerModule.getInstance().getOnlinePlayers().forEach(target -> target.sendMessage(RegionLang.combatLogged(target.getDisplayName())));
+				PlayerModule.getInstance().getOnlinePlayers().forEach(target -> target.sendMessage(RegionLang.combatLogged(target.getDisplayName())));
 			}
 		}
 

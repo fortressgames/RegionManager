@@ -2,8 +2,7 @@ package net.fortressgames.regionmanager.commands;
 
 import net.fortressgames.fortressapi.Lang;
 import net.fortressgames.fortressapi.commands.CommandBase;
-import net.fortressgames.fortressapi.players.FortressPlayer;
-import net.fortressgames.fortressapi.players.FortressPlayerModule;
+import net.fortressgames.fortressapi.players.PlayerModule;
 import net.fortressgames.regionmanager.PermissionLang;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
@@ -27,11 +26,11 @@ public class RegionCommand extends CommandBase {
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 
-		FortressPlayer player;
+		Player player;
 		Region region = null;
 
 		if(sender instanceof Player target) {
-			player = FortressPlayer.getPlayer(target);
+			player = target;
 		} else {
 			sender.sendMessage(Lang.PLAYERS_ONLY);
 			return;
@@ -126,7 +125,7 @@ public class RegionCommand extends CommandBase {
 
 			for(Region rg : UserModule.getInstance().getUser(player.getPlayer()).getRegions()) {
 
-				player.sendClickableMessage(ChatColor.GREEN + rg.getName() + ": ",
+				UserModule.getInstance().getUser(player).sendClickableMessage(ChatColor.GREEN + rg.getName() + ": ",
 						ChatColor.WHITE + "[CLICK HERE]", "rg info " + rg.getName());
 			}
 
@@ -177,7 +176,7 @@ public class RegionCommand extends CommandBase {
 				if(user.getCombatTask() != null)  user.getCombatTask().cancel();
 			});
 			UserModule.getInstance().clearUsers();
-			FortressPlayerModule.getInstance().getOnlinePlayers().forEach(pp -> UserModule.getInstance().addUser(pp));
+			PlayerModule.getInstance().getOnlinePlayers().forEach(pp -> UserModule.getInstance().addUser(pp));
 
 			sender.sendMessage(RegionLang.RELOAD);
 		}

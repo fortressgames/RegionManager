@@ -1,17 +1,17 @@
 package net.fortressgames.regionmanager.commands.subcommands;
 
-import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.users.User;
 import net.fortressgames.regionmanager.users.UserModule;
+import org.bukkit.entity.Player;
 
 public abstract class RegionPos {
 
-	public static void execute(FortressPlayer player, Region region, String[] args) {
+	public static void execute(Player player, Region region, String[] args) {
 
-		User user = UserModule.getInstance().getUser(player.getPlayer());
+		User user = UserModule.getInstance().getUser(player);
 
 		if(args.length == 2) {
 			user.getPoints().clear();

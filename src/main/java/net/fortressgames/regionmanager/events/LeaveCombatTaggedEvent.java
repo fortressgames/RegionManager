@@ -1,14 +1,14 @@
 package net.fortressgames.regionmanager.events;
 
-import net.fortressgames.fortressapi.events.FortressPlayerEvent;
-import net.fortressgames.fortressapi.players.FortressPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
-public class LeaveCombatTaggedEvent extends FortressPlayerEvent {
+public class LeaveCombatTaggedEvent extends PlayerEvent {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 
-	public LeaveCombatTaggedEvent(FortressPlayer player) {
+	public LeaveCombatTaggedEvent(Player player) {
 		super(player);
 	}
 

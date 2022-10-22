@@ -1,6 +1,5 @@
 package net.fortressgames.regionmanager.listeners;
 
-import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.events.CombatTaggedEvent;
@@ -34,21 +33,21 @@ public class pvplistener implements Listener {
 					if(region.getFlags().contains("PVP_FALSE")) {
 
 						e.setCancelled(true);
-						playerUser.getFortressPlayer().sendMessage(RegionLang.PVP_FALSE);
+						player.sendMessage(RegionLang.PVP_FALSE);
 						return;
 					}
 				}
 
-				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(playerUser.getFortressPlayer(), CombatTaggedCause.ATTACKED, targetUser.getFortressPlayer()));
-				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(targetUser.getFortressPlayer(), CombatTaggedCause.HIT, playerUser.getFortressPlayer()));
+				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(player, CombatTaggedCause.ATTACKED, target));
+				Bukkit.getPluginManager().callEvent(new CombatTaggedEvent(target, CombatTaggedCause.HIT, player));
 
-				tag(playerUser, playerUser.getFortressPlayer());
-				tag(targetUser, targetUser.getFortressPlayer());
+				tag(playerUser, player);
+				tag(targetUser, target);
 			}
 		}
 	}
 
-	private void tag(User user, FortressPlayer player) {
+	private void tag(User user, Player player) {
 		if(user.getCombatTask() == null) {
 			user.setCombatTask(new CombatTask(user, player));
 			player.sendMessage(RegionLang.COMBAT_TAG_ON);

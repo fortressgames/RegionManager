@@ -1,14 +1,14 @@
 package net.fortressgames.regionmanager.commands.subcommands;
 
-import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.regions.RegionModule;
+import org.bukkit.entity.Player;
 
 public abstract class RegionRemove {
 
-	public static void execute(FortressPlayer player, Region region, String[] args) {
+	public static void execute(Player player, Region region, String[] args) {
 
 		if(args.length == 2) {
 

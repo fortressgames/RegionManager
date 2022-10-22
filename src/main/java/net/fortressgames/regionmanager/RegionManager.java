@@ -5,14 +5,13 @@ import net.fortressgames.fortressapi.commands.CommandModule;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.regionmanager.commands.RegionCommand;
 import net.fortressgames.regionmanager.listeners.DeathListener;
+import net.fortressgames.regionmanager.listeners.PlayerMoveListener;
 import net.fortressgames.regionmanager.listeners.pvplistener;
 import net.fortressgames.regionmanager.regions.RegionModule;
-import net.fortressgames.regionmanager.tasks.MoveTask;
 import net.fortressgames.regionmanager.users.UserModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 public class RegionManager extends JavaPlugin {
 
@@ -51,11 +50,10 @@ public class RegionManager extends JavaPlugin {
 		RegionModule.getInstance().loadRegions();
 
 		// Register events
+		this.getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
 		this.getServer().getPluginManager().registerEvents(UserModule.getInstance(), this);
 		this.getServer().getPluginManager().registerEvents(new pvplistener(), this);
 		this.getServer().getPluginManager().registerEvents(new DeathListener(), this);
-
-		new MoveTask().runTaskTimer(this, TimeUnit.MILLISECONDS, 15);
 
 		getLogger().info(ConsoleMessage.GREEN + "Version: " + getDescription().getVersion() + " Enabled!" + ConsoleMessage.RESET);
 	}

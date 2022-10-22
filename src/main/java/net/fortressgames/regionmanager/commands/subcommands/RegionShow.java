@@ -1,6 +1,5 @@
 package net.fortressgames.regionmanager.commands.subcommands;
 
-import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.RegionLang;
 import net.fortressgames.regionmanager.RegionManager;
@@ -9,11 +8,12 @@ import net.fortressgames.regionmanager.utils.RegionMaths;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public abstract class RegionShow {
 
-	public static void execute(FortressPlayer player, Region region, String[] args) {
+	public static void execute(Player player, Region region, String[] args) {
 
 		if(args.length >= 2) {
 			for(int y = region.getRegionMaths().getMinY(); y < region.getRegionMaths().getMaxY(); y++) {

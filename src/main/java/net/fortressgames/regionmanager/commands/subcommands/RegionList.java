@@ -1,17 +1,17 @@
 package net.fortressgames.regionmanager.commands.subcommands;
 
 import net.fortressgames.fortressapi.Lang;
-import net.fortressgames.fortressapi.players.FortressPlayer;
 import net.fortressgames.regionmanager.regions.Region;
 import net.fortressgames.regionmanager.regions.RegionModule;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RegionList {
 
-	public static void execute(FortressPlayer player, Region region, String[] args) {
+	public static void execute(Player player, Region region, String[] args) {
 
 		player.sendMessage(Lang.LINE);
 		player.sendMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + "Regions: " + ChatColor.GRAY +

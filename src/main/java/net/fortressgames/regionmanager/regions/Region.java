@@ -2,7 +2,7 @@ package net.fortressgames.regionmanager.regions;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.fortressgames.fortressapi.players.FortressPlayerModule;
+import net.fortressgames.fortressapi.players.PlayerModule;
 import net.fortressgames.fortressapi.utils.Config;
 import net.fortressgames.fortressapi.utils.Vector3;
 import net.fortressgames.regionmanager.RegionManager;
@@ -100,7 +100,7 @@ public class Region {
 		}
 
 		if(flag.contains("EFFECT")) {
-			FortressPlayerModule.getInstance().getOnlinePlayers().forEach(player -> {
+			PlayerModule.getInstance().getOnlinePlayers().forEach(player -> {
 				if(regionMaths.inside(new Vector3(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()))) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(flag.split("_")[1]),
 							Integer.MAX_VALUE, Integer.parseInt(flag.split("_")[2])));
@@ -119,7 +119,7 @@ public class Region {
 		}
 
 		if(flag.contains("EFFECT")) {
-			FortressPlayerModule.getInstance().getOnlinePlayers().forEach(player -> {
+			PlayerModule.getInstance().getOnlinePlayers().forEach(player -> {
 				if(regionMaths.inside(new Vector3(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ()))) {
 					player.removePotionEffect(PotionEffectType.getByName(flag.split("_")[1]));
 				}
