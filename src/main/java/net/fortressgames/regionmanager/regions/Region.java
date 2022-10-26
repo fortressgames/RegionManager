@@ -32,8 +32,6 @@ public class Region {
 	@Getter private final List<String> flags;
 	@Getter private final HashMap<String, DisplayParticleTask> particleTasks = new HashMap<>();
 
-	@Getter private final List<Vector3> allPoints;
-
 	public Region(String name, int pri, RegionMaths regionMaths, World world, List<String> flags, String displayName, List<String> members) {
 		this.world = world;
 
@@ -43,8 +41,6 @@ public class Region {
 		this.regionMaths = regionMaths;
 		this.flags = flags;
 		this.members = members;
-
-		this.allPoints = regionMaths.getAllPoints();
 
 		flags.forEach(flag -> {
 			if(flag.contains("PARTICLE")) {
@@ -85,7 +81,7 @@ public class Region {
 				this);
 		task.runTaskTimer(RegionManager.getInstance(), TimeUnit.SECONDS, 1);
 
-		particleTasks.put(old, task);
+		particleTasks.put(old.split("_")[0], task);
 	}
 
 	/**

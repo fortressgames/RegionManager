@@ -22,7 +22,7 @@ public class DisplayParticleTask extends FortressRunnable {
 		this.region = region;
 
 		int play = 0;
-		List<Vector3> list = region.getAllPoints();
+		List<Vector3> list = region.getRegionMaths().getAllPoints();
 		Collections.shuffle(list);
 
 		for(Vector3 point : list) {
@@ -41,6 +41,6 @@ public class DisplayParticleTask extends FortressRunnable {
 	public void run() {
 
 		points.forEach(vector3 -> region.getWorld().spawnParticle(particle,
-				new Location(region.getWorld(), vector3.getBlockX(), vector3.getBlockY(), vector3.getBlockZ()), 1, 0, 0, 0, 0));
+				new Location(region.getWorld(), vector3.getBlockX() + 0.5, vector3.getBlockY() + 0.5, vector3.getBlockZ() + 0.5), 1, 0, 0, 0, 0));
 	}
 }

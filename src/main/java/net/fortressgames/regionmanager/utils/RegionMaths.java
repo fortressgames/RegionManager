@@ -5,6 +5,7 @@ import net.fortressgames.fortressapi.utils.Vector2;
 import net.fortressgames.fortressapi.utils.Vector3;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RegionMaths {
@@ -27,48 +28,35 @@ public class RegionMaths {
 	}
 
 	public List<Vector3> getAllPoints() {
-		List<Vector3> points = new ArrayList<>();
+		List<Vector3> out = new ArrayList<>();
 
-		int xMin = -99999;
-		int xMax = -99999;
-		int zMin = -99999;
-		int zMax = -99999;
+		List<Integer> vectorX = new ArrayList<>();
+		List<Integer> vectorZ = new ArrayList<>();
 
-		for(Vector2 vector2 : this.points) {
-			if(xMin == -99999) {
-				xMin = vector2.getBlockX();
-			} else if(xMin > vector2.getBlockX()) {
-				xMin = vector2.getBlockX();
-			}
-			if(zMin == -99999) {
-				zMin = vector2.getBlockZ();
-			} else if(zMin > vector2.getBlockZ()) {
-				zMin = vector2.getBlockZ();
-			}
-			if(xMax == -99999) {
-				xMax = vector2.getBlockX();
-			} else if(xMax < vector2.getBlockX()) {
-				xMax = vector2.getBlockX();
-			}
-			if(zMax == -99999) {
-				zMax = vector2.getBlockZ();
-			} else if(zMax < vector2.getBlockZ()) {
-				zMax = vector2.getBlockZ();
-			}
-		}
+		points.forEach(vector2 -> {
+			vectorX.add(vector2.getBlockX());
+			vectorZ.add(vector2.getBlockZ());
+		});
+		int maxX = Collections.max(vectorX);
+		int minX = Collections.min(vectorX);
+		int maxZ = Collections.max(vectorZ);
+		int minZ = Collections.min(vectorZ);
 
 		for(int y = minY; y < maxY; y++) {
-			for(int x = xMin; x < xMax; x++) {
-				for(int z = zMin; z < zMax; z++) {
 
-					if(inside(new Vector3(x, y, z))) {
-						points.add(new Vector3(x, y, z));
+			for(int x = minX; x <= maxX; x++) {
+				for(int z = minZ; z <= maxZ; z++) {
+
+					Vector3 vector3 = new Vector3(x, y, z);
+
+					if(inside(vector3)) {
+						out.add(vector3);
 					}
 				}
 			}
 		}
 
-		return points;
+		return out;
 	}
 
 	public boolean inside(Vector3 position) {
