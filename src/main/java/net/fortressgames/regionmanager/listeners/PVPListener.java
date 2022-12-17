@@ -14,7 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class pvplistener implements Listener {
+public class PVPListener implements Listener {
 
 	@EventHandler
 	public void EntityDamageFortress(EntityDamageByEntityEvent e) {

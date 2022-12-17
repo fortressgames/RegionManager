@@ -7,7 +7,7 @@ import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.regionmanager.commands.RegionCommand;
 import net.fortressgames.regionmanager.listeners.DeathListener;
 import net.fortressgames.regionmanager.listeners.PlayerMoveListener;
-import net.fortressgames.regionmanager.listeners.pvplistener;
+import net.fortressgames.regionmanager.listeners.PVPListener;
 import net.fortressgames.regionmanager.regions.RegionModule;
 import net.fortressgames.regionmanager.users.UserModule;
 import org.bukkit.entity.Player;
@@ -54,7 +54,7 @@ public class RegionManager extends JavaPlugin {
 		// Register events
 		this.getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
 		this.getServer().getPluginManager().registerEvents(UserModule.getInstance(), this);
-		this.getServer().getPluginManager().registerEvents(new pvplistener(), this);
+		this.getServer().getPluginManager().registerEvents(new PVPListener(), this);
 		this.getServer().getPluginManager().registerEvents(new DeathListener(), this);
 
 		// Adds players after reload
